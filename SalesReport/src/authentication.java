@@ -4,6 +4,13 @@
  */
 import java.awt.event.*;
 import javax.swing.JOptionPane;
+import java.awt.Color;
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.ResultSet;
+import java.sql.Statement;
+import javax.swing.table.DefaultTableModel;
+
 /**
  *
  * @author Jhon Paulo Guevarra
@@ -15,6 +22,34 @@ public class authentication extends javax.swing.JFrame {
      */
     public authentication() {
         initComponents();
+    }
+    static class SalesRecordDB {
+
+        public static void loadSalesData(javax.swing.JTable table) {
+            try {
+                Connection conn = DriverManager.getConnection("jdbc:mysql://localhost:3306/sales_record", "root", "");
+                Statement stmt = conn.createStatement();
+                ResultSet rs = stmt.executeQuery("SELECT * FROM sales");
+                
+                // Prepare the table model
+                DefaultTableModel model = (DefaultTableModel) table.getModel();
+                model.setRowCount(0); // Clear any previous data
+
+                while (rs.next()) {
+                    model.addRow(new Object[]{
+                        rs.getString("product_name"),
+                        rs.getInt("stock"),
+                        rs.getDouble("price")
+                    });
+                }
+
+                rs.close();
+                stmt.close();
+                conn.close();
+            } catch (Exception e) {
+                System.err.println("Error: " + e.getMessage());
+            }
+        }
     }
 
     /**
