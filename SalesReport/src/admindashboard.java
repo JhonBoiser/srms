@@ -1,10 +1,13 @@
 import java.awt.Color;
+<<<<<<< HEAD
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.ResultSet;
 import java.sql.Statement;
 import javax.swing.JTable;
 import javax.swing.table.DefaultTableModel;
+=======
+>>>>>>> parent of 1477896 (updated)
 
 
 /*
